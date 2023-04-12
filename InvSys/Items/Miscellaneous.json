@@ -1,0 +1,107 @@
+{
+  "Bunny Tooth": {
+    "Name": "Bunny Tooth",
+    "Type": "Miscellaneous",
+    "SubType": "AnimalPart",
+    "Description": "The Tooth of a Bunny. Can probably be sold in the Guild for a pittance.",
+    "Value": 2
+  },
+  "Rope": {
+    "Name": "Rope",
+    "Type": "Miscellaneous",
+    "SubType": "Utility",
+    "Description": "A simple sturdy Rope.",
+    "Value": 15
+  },
+  "Wolf Claws": {
+    "Name": "Wolf Claws",
+    "Type": "Miscellaneous",
+    "SubType": "AnimalPart",
+    "Description": "Claws of a Wolf. Can probably be sold in the guild for a pittance.",
+    "Value": 4
+  },
+  "Torch": {
+    "Name": "Torch",
+    "Type": "Miscellaneous",
+    "SubType": "Utility",
+    "Description": "A simple wooden Torch. Will probably last a few hours.",
+    "Value": 20
+  },
+  "Lantern": {
+    "Name": "Lantern",
+    "Type": "Miscellaneous",
+    "SubType": "Utility",
+    "Description": "A simple hooded oil Lantern. Will probably last a day or two",
+    "Value": 40
+  },
+  "Burnt Lantern": {
+    "Name": "Burnt Lantern",
+    "Type": "Miscellaneous",
+    "SubType": "Utility",
+    "Description": "A simple hooded oil Lantern. This one has run out of fuel, but can be refilled with some lantern oil.",
+    "Value": 10
+  },
+  "Lantern Oil": {
+    "Name": "Lantern Oil",
+    "Type": "Miscellaneous",
+    "SubType": "Utility",
+    "Description": "Can be used to refill simple oil Lanterns",
+    "Value": 30
+  },
+  "Goblin Ear": {
+    "Name": "Goblin Ear",
+    "Type": "Miscellaneous",
+    "SubType": "MonsterPart",
+    "Description": "The ear of a Goblin. Can be turned in at the Guild for a bounty.",
+    "Value": 4
+  },
+  "Direwolf Claws": {
+    "Name": "Direwolf Claws",
+    "Type": "Miscellaneous",
+    "SubType": "AnimalPart",
+    "Description": "The claws of a Direwolf. A meaner and bigger ancestor of normal wolfs. Can be turned in at the Guild for a bounty.",
+    "Value": 10
+  },
+  "Mana Lantern": {
+    "Name": "Mana Lantern",
+    "Type": "Miscellaneous",
+    "SubType": "Utility",
+    "Description": "A Magical versioin of a normal Lantern. It draws fuel from the ambient Mana.",
+    "Value": 100
+  },
+  "Dead Mana Lantern": {
+    "Name": "Dead Mana Lantern",
+    "Type": "Miscellaneous",
+    "SubType": "Utility",
+    "Description": "A Mana Lantern that ran out of fuel. Most mages should be able to relight it.",
+    "Value": 30
+  },
+  "Orc Tusks": {
+    "Name": "Orc Tusks",
+    "Type": "Miscellaneous",
+    "SubType": "MonsterPart",
+    "Description": "The tusk of an Orc. Can be turned in at the Guild for a bounty.",
+    "Value": 10
+  },
+  "Iron Ore": {
+    "Name": "Iron Ore",
+    "Type": "Miscellaneous",
+    "SubType": "MetalOre",
+    "Description": "A standard Chunk of Iron ore. A Blacksmith would probably be happy to buy it.",
+    "Value": 50
+  },
+  "Copper Ore": {
+    "Name": "Copper Ore",
+    "Type": "Miscellaneous",
+    "SubType": "MetalOre",
+    "Description": "A normal Chunk of Copper ore A Blacksmith would probably be happy to buy it.",
+    "Value": 40
+  },
+  "Iron Shortword": {
+    "Name": "Iron Shortword",
+    "Type": "Miscellaneous",
+    "SubType": "PlayerItem-weapon",
+    "Description": "A normal sword made of medium quality iron. Often used by begginers who can\u0027t afford better",
+    "Value": 40
+  }
+}

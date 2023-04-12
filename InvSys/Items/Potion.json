@@ -1,0 +1,57 @@
+{
+  "Empty": {
+    "Health": 0,
+    "Mana": 0,
+    "AtkBuff": 0,
+    "DefBuff": 0,
+    "Name": "Empty",
+    "Type": "Potion",
+    "SubType": "none",
+    "Description": "You sure wished you had something to put here.",
+    "Value": 0
+  },
+  "Minor Healing": {
+    "Health": 7,
+    "Mana": 0,
+    "AtkBuff": 0,
+    "DefBuff": 0,
+    "Name": "Minor Healing",
+    "Type": "Potion",
+    "SubType": "Health",
+    "Description": "The easiest Health potion to make. Often made by apprentices as practice and sold for little.",
+    "Value": 5
+  },
+  "Minor Mana": {
+    "Health": 0,
+    "Mana": 10,
+    "AtkBuff": 0,
+    "DefBuff": 0,
+    "Name": "Minor Mana",
+    "Type": "Potion",
+    "SubType": "Mana",
+    "Description": "The simplest potion to make. So simple in fact, that it often occurs naturally in mana dense springs. Great practice for amature Alchemists.",
+    "Value": 5
+  },
+  "Minor Damage\u002B": {
+    "Health": 0,
+    "Mana": 0,
+    "AtkBuff": 0,
+    "DefBuff": 5,
+    "Name": "Minor Damage\u002B",
+    "Type": "Potion",
+    "SubType": "Buff",
+    "Description": "This potion is helps you strike just that little bit harder and faster. Barely noticable though greatly helpful.",
+    "Value": 15
+  },
+  "Minor Defense\u002B": {
+    "Health": 0,
+    "Mana": 0,
+    "AtkBuff": 5,
+    "DefBuff": 0,
+    "Name": "Minor Defense\u002B",
+    "Type": "Potion",
+    "SubType": "Buff",
+    "Description": "The effect of this potion is often overlooked in favour of Minor Damage\u002B, though just as helpful. Regular use may have lasting aftereffects.",
+    "Value": 15
+  }
+}

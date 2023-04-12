@@ -1,0 +1,6 @@
+none|Empty|Nothing|0|0|0|0|0
+Health|Minor Healing|The easiest Health potion to make. Often made by apprentices as practice and sold for little.|7|0|0|0|5
+Mana|Minor Mana|The simplest potion to make. So simple in fact, that it often occurs naturally in mana dense springs. Great practice for amature Alchemists.|0|10|0|0|5
+Buff|Minor Damage+|This potion is helps you strike just that little bit harder and faster. Barely noticable though greatly helpful.|0|0|0|5|15
+Buff|Minor Defense+|The effect of this potion is often overlooked in favour of Minor Damage+, though just as helpful. Regular use may have lasting aftereffects.|0|0|5|0|15
+/Subtype|Name|Description|HealedAmount|ManaReplenished|+def%|+atk%|Cost

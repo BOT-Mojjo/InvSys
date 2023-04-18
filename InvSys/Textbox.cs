@@ -158,6 +158,47 @@ static public class Menu{ //Formerly miscFunctions
         }
         return $"a|{answer}";
     }
+
+    static bool getCorner = true;
+    static (int Left, int Top) Origin;
+    // static (int Left, int Top) CursorOffset;
+
+    static List<((int Left, int Top) position, string text)> listText = new(); //yes
+    static int lastPos = 0;
+    static int activeItem = 0;
+
+    static public int ListInput() //God save us all
+    {   // I am assuming that it's is the latest textbox that calls this method
+    Origin = Console.GetCursorPosition();
+    if(lastPos == activeItem)
+        {
+            Console.SetCursorPosition(listText[activeItem].position.Left, listText[activeItem].position.Top);
+            Console.Write(">"+listText[activeItem].text);
+        }
+        while(true)
+        {
+            ConsoleKey Input = Console.ReadKey(true).Key;
+            switch(Input)
+            {
+                case(ConsoleKey.UpArrow):
+                if(activeItem != 0) activeItem--;
+                break;
+                case(ConsoleKey.DownArrow):
+                if(activeItem != listText.Count-1) activeItem++;
+                break;
+                case(ConsoleKey.Enter):
+                Console.SetCursorPosition(Origin.Left, Origin.Top);
+                return activeItem;
+                default:
+                break;
+            }
+            Console.SetCursorPosition(listText[lastPos].position.Left, listText[lastPos].position.Top);
+            Console.Write(""+listText[lastPos].text+" ");
+            Console.SetCursorPosition(listText[activeItem].position.Left, listText[activeItem].position.Top);
+            Console.Write(">"+listText[activeItem].text);
+            lastPos = activeItem;
+        }
+    }
     static public void TextBox(string textInput)
     {
         TextBox(textInput, "equal");
@@ -171,6 +212,15 @@ static public class Menu{ //Formerly miscFunctions
 
     static public void BoxBorder(){  //replaces Console.WriteLine("+------------=========------------+"); because of variable window width for non-simple text boxes
         string border = "";
+        if(getCorner) 
+        {
+            // Origin = Console.GetCursorPosition();
+            // CursorOffset = (0,0);
+            listText = new();
+            activeItem = 0;
+            lastPos = 0;
+        }
+        getCorner = !getCorner;
         int thickLength = windowWidth/4;
         if(windowWidth%2 != 0 && thickLength%2 == 0){
             thickLength = thickLength + 1;
@@ -189,9 +239,11 @@ static public class Menu{ //Formerly miscFunctions
         border = border.Remove(border.Length-1, 1);
         border = border.Insert(border.Length, "+");
         Console.WriteLine(border);
+        
+
     }
 
-    static public void BoxLine(string textInput, string padDir = "right"){  // needed because of special boxes
+    static public void BoxLine(string textInput, string padDir = "right", bool setListPos = false){  // needed because of special boxes
         int weDied = 0;  //if we get stuck in an endless loop, this should stop it eventually.
         int splitTheWord = 0;
         int wordCount = 0;
@@ -275,6 +327,11 @@ static public class Menu{ //Formerly miscFunctions
             }
             weDied++;
         }
+
+        if(setListPos)
+        {
+            listText.Add(new((Console.GetCursorPosition().Left+2, Console.GetCursorPosition().Top), text[0]));
+        }
         switch(padDir.ToLower()){
             case "right":
                 foreach(string output in text){
@@ -289,9 +346,17 @@ static public class Menu{ //Formerly miscFunctions
                 break;
 
             // case "spread":
-            //     foreach(string output in text){
-            //         Console.WriteLine("| "+PadSpread(output,windowWidth-2)+" |");
+            //     // foreach(string output in text){
+            //     //     Console.WriteLine("| "+PadSpread(output,windowWidth-2)+" |");
+            //     // }'
+            //     int words = text[0].Split(' ').Count();
+            //     int pad = windowWidth/words+1;
+            //     int[] pads = new int[words+1];
+            //     for (int i = 0; i < pads.Length; i++)
+            //     {
+            //         pads[i] = pad;
             //     }
+            //     if()
             //     break;
 
             case "equal":
@@ -304,7 +369,40 @@ static public class Menu{ //Formerly miscFunctions
                 Console.WriteLine("| "+text+" |");
                 break;
         }
-    }   
+    }
+
+    static public int choiceList(string[] choices)
+    {
+        int minWidth = 0;
+        foreach(string text in choices)
+        {
+            if(text.Length > minWidth) minWidth = text.Length;
+        }
+        WidthChange(minWidth+6);
+        BoxBorder();
+        for (int i = 0; i < choices.Length; i++)
+        {
+            BoxLine(choices[i], "right", true);
+        }
+        BoxBorder();
+        WidthChange();
+        return ListInput();
+    }
+
+    static bool wSwitch = false;
+    static int oldWidth;
+    static void WidthChange(int newWidth = -1)
+    {
+        if(wSwitch)
+        {
+            windowWidth = oldWidth;
+            wSwitch = false;
+            return;
+        }
+        oldWidth = windowWidth;
+        windowWidth = newWidth;
+        wSwitch = true;
+    }  
 }
 
 

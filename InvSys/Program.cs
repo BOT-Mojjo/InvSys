@@ -1,22 +1,15 @@
 ﻿using System;
 using System.IO;
-using System.Text.Json;
+// using System.Text.Json;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 int partyCoins = 89;
 
-List<RootObject> MiscInv = new();
-Potion[] potionBelt = new Potion[7];
+        
+RootObject.ItemSchemaInit();
 
-var testInvSchema = new Dictionary<string, RootObject>();
-RootObject.itemSchema.TryGetValue("Potion", out testInvSchema);
-potionBelt[0] = (Potion) testInvSchema["Minor Healing"];
-// Potion[] potionBelt = new Potion[7];
-// for(int i = 0; i < potionBelt.Length; i++)
-// {
-//     potionBelt[i] = RootObject.itemSchema["Potion"]["Empty"];
-// }
-
-// string untangleType = "";
+Console.CursorVisible = false;
+// string untangleType = "Potion";
 // string[] untangle = File.ReadAllLines(@".\Items\"+ untangleType + ".txt");
 // foreach(string item in untangle)
 // {
@@ -30,6 +23,18 @@ potionBelt[0] = (Potion) testInvSchema["Minor Healing"];
 //     RootObject.itemSchema[tempItem.Type].Add(tempItem.Name, tempItem);
 
 // }
+List<RootObject> MiscInv = new();
+Potion[] potionBelt = new Potion[7];
+
+// var testInvSchema = new Dictionary<string, RootObject>();
+// RootObject.itemSchema.TryGetValue("Potion", out testInvSchema);
+// Potion[] potionBelt = new Potion[7];
+for(int i = 0; i < potionBelt.Length; i++)
+{
+    potionBelt[i] = (Potion) RootObject.itemSchema["Potion"]["Empty"];
+}
+// potionBelt[0] = (Potion) testInvSchema["Minor Healing"];
+
 // var options = new JsonSerializerOptions
 // {
 //     IncludeFields = true,
@@ -92,14 +97,40 @@ void drawInventory(){
 
 void actionPotionsInventory(){
     bool ongoing = true;
-    while(ongoing == true){
         Console.Clear();
+    while(ongoing == true){
         Menu.BoxBorder();
-        Menu.BoxLine("--=|Potion Belt|=--", "equal");
+        Menu.BoxLine("---==|Potion Belt|=-=--", "equal");
         for (int i = 0; i < potionBelt.Length; i++)
         {
-            Menu.BoxLine($"Potion slot {i+1}: {potionBelt[i].Name}");
+            Menu.BoxLine($"Potion slot {i+1}: {potionBelt[i].Name}", "right", true);
         }
+        Menu.BoxBorder();
+        int activeItem = Menu.ListInput();
+        Menu.BoxBorder();
+        Menu.BoxLine("---=|"+potionBelt[activeItem].Name+"|=---", "equal");
+        Menu.BoxLine(potionBelt[activeItem].Description, "equal");
+        Menu.BoxBorder();
+
+        if(potionBelt[activeItem].Name == "Empty")
+        {
+            Menu.choiceList(new string[]{"Go Back"});
+            Console.Clear();
+            continue;
+        }
+
+        int action = Menu.choiceList(new string[]{"Move", "Use", "Go Back"});
+        switch(action)
+        {
+            case(0):
+            break;
+            case(1):
+            potionBelt[activeItem] = (Potion) RootObject.itemSchema["Potion"]["Empty"];
+            break;
+        }
+        
+        Console.Clear();
+
     }
         // mFunc.BoxBorder(windowWidth);
         // mFunc.BoxLine("--=Potion Belt=--", windowWidth, "equal");

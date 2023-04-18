@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Text.Json;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 public class RootObject
@@ -10,20 +10,36 @@ public class RootObject
     public string SubType { get; protected set; }
     public string Description { get; protected set; }
     public int Value { get; protected set;}
-    public static Dictionary <string, Dictionary<string, RootObject>> itemSchema { get; private set; }
+    public static Dictionary <string, Dictionary<string, RootObject>> itemSchema = new();
+    public static void ItemSchemaInit()
+    {
+        string[] itemFile = Directory.EnumerateFiles(@".\Items", "*.json").ToArray();
 
+        //Misc Iteam init
+        Console.WriteLine("loading " + itemFile[0]);
+        string data = File.ReadAllText(itemFile[0]);
+        RootObject.itemSchema.Add(itemFile[0].Substring(8, itemFile[0].Length-13), JsonConvert.DeserializeObject<Dictionary<string, RootObject>>(data));
+
+        //Potions Init
+        Console.WriteLine("loading " + itemFile[1]);
+        data = File.ReadAllText(itemFile[1]);
+        var pots = new Dictionary<string, Potion>(JsonConvert.DeserializeObject<Dictionary<string, Potion>>(data));
+        RootObject.itemSchema.Add(itemFile[1].Substring(8, itemFile[1].Length-13), pots);
+    }
     static RootObject()
     {
-        itemSchema = new Dictionary<string, Dictionary<string, RootObject>>();
-        var itemFile = Directory.EnumerateFiles(@".\Items", "*.json");
-        foreach(string currentFile in itemFile)
-        {
-            Console.WriteLine("loading " + currentFile);
-            var data = JsonSerializer.Deserialize<Dictionary<string, RootObject>>(currentFile);
+        // itemSchema = new Dictionary<string, Dictionary<string, RootObject>>();
+        // var itemFile = Directory.EnumerateFiles(@".\Items", "*.json");
+        // foreach(string currentFile in itemFile)
+        // {
+        //     Console.WriteLine("loading " + currentFile);
+        // }
+        // itemSchema.Add("test", new Dictionary<string, RootObject>());
+        // itemSchema.Add("Potion", InitPotion("Potion"));
 
-        }
+        //TODO: It's so funny I can't initialize the itemSchema in the RootObject Initializer because Rootobject isn't initialized yet. :)
     }
-
+    [JsonConstructor]
     public RootObject(string name, string type, string subType, string description, int value)
     {
         Name = name;
@@ -40,6 +56,18 @@ public class RootObject
         Description = description;
     }
     // public RootObject(){}
+    //Uses System.Text.JsonSerializer, not newtonsoft.Json Serializer
+    // static public Dictionary<string, RootObject> InitPotion(string fileLocation)
+    // {
+    //     if(fileLocation != "Potion") throw new Exception();
+    //     Dictionary<string, Potion> data = JsonSerializer.Deserialize<Dictionary<string, Potion>>(File.ReadAllText("./Items/"+fileLocation+".json"));
+    //     Dictionary<string, RootObject> polyData = new();
+    //     foreach (var pot in data)
+    //     {
+    //         polyData.Add(pot.Key, pot.Value);
+    //     }
+    //     return polyData;
+    // }
 }
 
 public class Potion : RootObject

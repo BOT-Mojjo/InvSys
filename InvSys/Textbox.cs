@@ -167,6 +167,8 @@ static public class Menu{ //Formerly miscFunctions
     static int lastPos = 0;
     static int activeItem = 0;
 
+    static Stack<MenuSavestate> lastMenu = new();
+
     static public int ListInput() //God save us all
     {   // I am assuming that it's is the latest textbox that calls this method
     Origin = Console.GetCursorPosition();
@@ -371,22 +373,84 @@ static public class Menu{ //Formerly miscFunctions
         }
     }
 
-    static public int choiceList(string[] choices)
+    static public int choiceList(string[] choices, bool changeWidth = true)
     {
-        int minWidth = 0;
-        foreach(string text in choices)
+        if(changeWidth)
         {
-            if(text.Length > minWidth) minWidth = text.Length;
+            int minWidth = 0;
+            foreach(string text in choices)
+            {
+                if(text.Length > minWidth) minWidth = text.Length;
+            }
+            WidthChange(minWidth+6);
+            BoxBorder();
         }
-        WidthChange(minWidth+6);
-        BoxBorder();
         for (int i = 0; i < choices.Length; i++)
         {
             BoxLine(choices[i], "right", true);
         }
         BoxBorder();
-        WidthChange();
+        if(changeWidth) WidthChange();
         return ListInput();
+    }
+
+    static public int choiceList(string[] choices, int length, bool changeWidth = true)
+    {
+        int offset=0;                                  //Keeps track of what page you're on
+        int maxOffset=(length-12);                  //Keeps track of how many pages your inventory has
+        if(changeWidth)
+        {
+            int minWidth = 0;
+            foreach(string text in choices)
+            {
+                if(text.Length > minWidth) minWidth = text.Length;
+            }
+            WidthChange(minWidth+6);
+            BoxBorder();
+        }
+        for (int i = 0; i < choices.Length; i++)
+        {
+            BoxLine(choices[i], "right", true);
+        }
+        BoxBorder();
+        if(changeWidth) WidthChange();
+        return ListInput();
+    }
+
+    static public int ListInput(ref int offset, ref bool ongoing) //God save us all
+    {   // I am assuming that it's is the latest textbox that calls this method
+    Origin = Console.GetCursorPosition();
+    if(lastPos == activeItem)
+        {
+            Console.SetCursorPosition(listText[activeItem].position.Left, listText[activeItem].position.Top);
+            Console.Write(">"+listText[activeItem].text);
+        }
+        while(true)
+        {
+            ConsoleKey Input = Console.ReadKey(true).Key;
+            switch(Input)
+            {
+                case(ConsoleKey.UpArrow):
+                if(activeItem != 0) activeItem--;
+                
+                    
+                break;
+                case(ConsoleKey.DownArrow):
+                if(activeItem != listText.Count-1) activeItem++;
+                
+                break;
+                case(ConsoleKey.Enter):
+                Console.SetCursorPosition(Origin.Left, Origin.Top);
+                return activeItem+offset;
+                default:
+                break;
+            }
+            Console.SetCursorPosition(listText[lastPos].position.Left, listText[lastPos].position.Top);
+            Console.Write(""+listText[lastPos].text+" ");
+            Console.SetCursorPosition(listText[activeItem].position.Left, listText[activeItem].position.Top);
+            Console.Write(">"+listText[activeItem].text);
+            lastPos = activeItem;
+        }
     }
 
     static bool wSwitch = false;
@@ -403,6 +467,16 @@ static public class Menu{ //Formerly miscFunctions
         windowWidth = newWidth;
         wSwitch = true;
     }  
+}
+
+public class MenuSavestate
+{
+    static (int Left, int Top) Origin;
+    // static (int Left, int Top) CursorOffset;
+
+    static List<((int Left, int Top) position, string text)> listText = new(); //yes
+    static int lastPos = 0;
+    static int activeItem = 0;
 }
 
 

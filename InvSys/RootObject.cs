@@ -24,7 +24,12 @@ public class RootObject
         Console.WriteLine("loading " + itemFile[1]);
         data = File.ReadAllText(itemFile[1]);
         var pots = new Dictionary<string, Potion>(JsonConvert.DeserializeObject<Dictionary<string, Potion>>(data));
-        RootObject.itemSchema.Add(itemFile[1].Substring(8, itemFile[1].Length-13), pots);
+        itemSchema.Add("Potion", new Dictionary<string, RootObject>());
+        // RootObject.itemSchema.Add(itemFile[1].Substring(8, itemFile[1].Length-13), pots);
+        foreach(KeyValuePair<string, Potion> pot in pots)
+        {
+            itemSchema["Potion"].Add(pot.Key, pot.Value);
+        }
     }
     static RootObject()
     {

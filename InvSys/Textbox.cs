@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
 
-static public class Menu{ //Formerly miscFunctions
+public class Menu{ //Formerly miscFunctions
     static int windowWidth = 35;
     static Menu()
     {
         string answer;
         Console.Clear();
         while(true){
-            Menu.TextBox("Please Choose a Textbox size. Recommended 35-55. Size is measured in the amount of characters. Note: Anything that isn't a number will be treated as a 0.");
-            windowWidth = Menu.StrToInt(Console.ReadLine());
+            Menu temp = new();
+            temp.TextBox("Please Choose a Textbox size. Recommended 35-55. Size is measured in the amount of characters. Note: Anything that isn't a number will be treated as a 0.");
+            windowWidth = temp.StrToInt(Console.ReadLine());
             if(windowWidth < 20){
-                Menu.TextBox("A size less than 20 may cause runtime issues. The game will break, skipping the offending textbox. Understood? y/n");
+                temp.TextBox("A size less than 20 may cause runtime issues. The game will break, skipping the offending textbox. Understood? y/n");
                 answer = Console.ReadLine().ToLower();
                 if(answer == "y" || answer == "yes"){
 
@@ -19,7 +20,7 @@ static public class Menu{ //Formerly miscFunctions
                     windowWidth = 35;
                 }
             }
-            Menu.TextBox("Is this size acceptable? y/n");
+            temp.TextBox("Is this size acceptable? y/n");
             answer = Console.ReadLine().ToLower();
             if(answer == "y" || answer == "yes"){
                 break;
@@ -31,15 +32,15 @@ static public class Menu{ //Formerly miscFunctions
             }   
         }
     }
-    static public Random genRandom = new Random();
+    public Random genRandom = new Random();
 
-    static public int StrToInt(string text){
+    public int StrToInt(string text){
         int ParsedNumber;                                     //checks if the string can be used with int.parse
         int.TryParse(text, out ParsedNumber);                 //and if it can it does, otherwise it returns a 0
         return ParsedNumber;                                  //I did this because i didn't like how it worked, though at this point it might just be better to use eit as intended.
         
     }
-    static public bool GoBack(){        //Had to use this identical funciton for so many loops, so i made it a function
+    public bool GoBack(){        //Had to use this identical funciton for so many loops, so i made it a function
         TextBox("Go back? y/n");
         string answer = Console.ReadLine().ToLower();
         if(answer == "y" || answer == "yes"){
@@ -49,12 +50,12 @@ static public class Menu{ //Formerly miscFunctions
         }
     } 
 
-    static public string PadEqual(string str, int desiredLength){   // if i have padRight and padLeft, why cant i have PadEqual
+    public string PadEqual(string str, int desiredLength){   // if i have padRight and padLeft, why cant i have PadEqual
         string paddedString=str.PadLeft(((desiredLength-str.Length)/2)+str.Length);//Pads the left side, half of the total pad
         return paddedString.PadRight(desiredLength);                               //Pads the right side, other half of the total pad
     }
 
-    // static public string MiscInvList(string name, string type = "all", string slotType = "", bool count = false, string[] extraText = null){
+    // public string MiscInvList(string name, string type = "all", string slotType = "", bool count = false, string[] extraText = null){
     //     List<int> invType = MiscInvListType(type);
     //     bool ongoing = true;
     //     int invLength = invType.Count;
@@ -114,7 +115,7 @@ static public class Menu{ //Formerly miscFunctions
     //     return "no";
     // }
 
-    // static public List<int> MiscInvListType(string type = "all"){  // was gonna need more than 3 duplicates of this code, therefore it is now a function
+    // public List<int> MiscInvListType(string type = "all"){  // was gonna need more than 3 duplicates of this code, therefore it is now a function
     //     List<int> invType = new List<int>();
     //     for(int i = 0; i < InventoryLists.miscInventory.Count; i++){
     //         if(type == "all"){
@@ -126,50 +127,50 @@ static public class Menu{ //Formerly miscFunctions
     //     return invType;
     // }
 
-    static public string MovePage(int page, int pageTotal, string[] extraText = null){
-        if(pageTotal > 0){
-            Console.WriteLine(PadEqual("Move between pages", windowWidth));
-            Console.WriteLine(PadEqual("by typing '<' or '>'", windowWidth));
-            if(extraText != null){
-                for(int i = 0; i < extraText.Length; i++){
-                    Console.WriteLine(PadEqual(extraText[i], windowWidth));
-                }
-            }
-        }
-        string answer = Console.ReadLine();   // a|{answer} something that isn't moving between pages
-        if(pageTotal > 0 && (answer == "<" || answer == ">")){
-            if(answer == "<"){
-                if(page == 0){
-                    Console.WriteLine("You're on the first page.");
-                    Console.ReadKey();
-                } else {
-                    page--;
-                    return $"p|{page}";
-                }
-            } else if(answer == ">"){
-                if(page == pageTotal){
-                    Console.WriteLine("You're on the last page.");
-                    Console.ReadKey();
-                } else {
-                    page++;
-                    return $"p|{page}";
-                }
-            }
-        }
-        return $"a|{answer}";
-    }
+    // public string MovePage(int page, int pageTotal, string[] extraText = null){
+    //     if(pageTotal > 0){
+    //         Console.WriteLine(PadEqual("Move between pages", windowWidth));
+    //         Console.WriteLine(PadEqual("by typing '<' or '>'", windowWidth));
+    //         if(extraText != null){
+    //             for(int i = 0; i < extraText.Length; i++){
+    //                 Console.WriteLine(PadEqual(extraText[i], windowWidth));
+    //             }
+    //         }
+    //     }
+    //     string answer = Console.ReadLine();   // a|{answer} something that isn't moving between pages
+    //     if(pageTotal > 0 && (answer == "<" || answer == ">")){
+    //         if(answer == "<"){
+    //             if(page == 0){
+    //                 Console.WriteLine("You're on the first page.");
+    //                 Console.ReadKey();
+    //             } else {
+    //                 page--;
+    //                 return $"p|{page}";
+    //             }
+    //         } else if(answer == ">"){
+    //             if(page == pageTotal){
+    //                 Console.WriteLine("You're on the last page.");
+    //                 Console.ReadKey();
+    //             } else {
+    //                 page++;
+    //                 return $"p|{page}";
+    //             }
+    //         }
+    //     }
+    //     return $"a|{answer}";
+    // }
 
-    static bool getCorner = true;
-    static (int Left, int Top) Origin;
-    // static (int Left, int Top) CursorOffset;
+    bool getCorner = true;
+    (int Left, int Top) Origin;
+    // (int Left, int Top) CursorOffset;
 
-    static List<((int Left, int Top) position, string text)> listText = new(); //yes
-    static int lastPos = 0;
-    static int activeItem = 0;
+    List<((int Left, int Top) position, string text)> listText = new(); //yes
+    int lastPos = 0;
+    int activeItem = 0;
 
-    static Stack<MenuSavestate> lastMenu = new();
+    Stack<MenuSavestate> lastMenu = new();
 
-    static public int ListInput() //God save us all
+    public int ListInput() //God save us all
     {   // I am assuming that it's is the latest textbox that calls this method
     Origin = Console.GetCursorPosition();
     if(lastPos == activeItem)
@@ -201,18 +202,18 @@ static public class Menu{ //Formerly miscFunctions
             lastPos = activeItem;
         }
     }
-    static public void TextBox(string textInput)
+    public void TextBox(string textInput)
     {
         TextBox(textInput, "equal");
     }   
 
-    static public void TextBox(string textInput, string padDir){
+    public void TextBox(string textInput, string padDir){
         BoxBorder();
         BoxLine(textInput, padDir);
         BoxBorder();
     }
 
-    static public void BoxBorder(){  //replaces Console.WriteLine("+------------=========------------+"); because of variable window width for non-simple text boxes
+    public void BoxBorder(){  //replaces Console.WriteLine("+------------=========------------+"); because of variable window width for non-simple text boxes
         string border = "";
         if(getCorner) 
         {
@@ -245,7 +246,7 @@ static public class Menu{ //Formerly miscFunctions
 
     }
 
-    static public void BoxLine(string textInput, string padDir = "right", bool setListPos = false){  // needed because of special boxes
+    public void BoxLine(string textInput, string padDir = "right", bool setListPos = false){  // needed because of special boxes
         int weDied = 0;  //if we get stuck in an endless loop, this should stop it eventually.
         int splitTheWord = 0;
         int wordCount = 0;
@@ -373,7 +374,7 @@ static public class Menu{ //Formerly miscFunctions
         }
     }
 
-    static public int choiceList(string[] choices, bool changeWidth = true)
+    public int choiceList(string[] choices, bool changeWidth = true)
     {
         if(changeWidth)
         {
@@ -394,7 +395,7 @@ static public class Menu{ //Formerly miscFunctions
         return ListInput();
     }
 
-    static public int choiceList(string[] choices, int length, bool changeWidth = true)
+    public int choiceList(string[] choices, int length, bool changeWidth = true)
     {
         int offset=0;                                  //Keeps track of what page you're on
         int maxOffset=(length-12);                  //Keeps track of how many pages your inventory has
@@ -417,7 +418,7 @@ static public class Menu{ //Formerly miscFunctions
         return ListInput();
     }
 
-    static public int ListInput(ref int offset, ref bool ongoing) //God save us all
+    public int ListInput(ref int offset, ref bool ongoing) //God save us all
     {   // I am assuming that it's is the latest textbox that calls this method
     Origin = Console.GetCursorPosition();
     if(lastPos == activeItem)
@@ -453,9 +454,9 @@ static public class Menu{ //Formerly miscFunctions
         }
     }
 
-    static bool wSwitch = false;
-    static int oldWidth;
-    static void WidthChange(int newWidth = -1)
+    bool wSwitch = false;
+    int oldWidth;
+    void WidthChange(int newWidth = -1)
     {
         if(wSwitch)
         {
@@ -471,12 +472,12 @@ static public class Menu{ //Formerly miscFunctions
 
 public class MenuSavestate
 {
-    static (int Left, int Top) Origin;
-    // static (int Left, int Top) CursorOffset;
+    (int Left, int Top) Origin;
+    // (int Left, int Top) CursorOffset;
 
-    static List<((int Left, int Top) position, string text)> listText = new(); //yes
-    static int lastPos = 0;
-    static int activeItem = 0;
+    List<((int Left, int Top) position, string text)> listText = new(); //yes
+    int lastPos = 0;
+    int activeItem = 0;
 }
 
 
